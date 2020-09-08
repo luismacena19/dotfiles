@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [[ $(xrandr | grep -o "VGA1 connected") ]]; then
+   	xrandr --output LVDS1 --off --output DP1 --off --output HDMI1 --off --output VGA1 --primary --auto --pos 0x0 --rotate normal --output VIRTUAL1 --off
+	elif [[ $(xrandr | grep -o "HDMI1 connected") ]]; then
+	xrandr --output LVDS1 --off --output DP1 --off --output HDMI1 --primary --auto --pos 0x0 --rotate normal --output VGA1 --off --output VIRTUAL1 --off
+	else
+	xrandr --output LVDS1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output DP1 --off --output HDMI1 --off --output VGA1 --off --output VIRTUAL1 --off
+fi
+exit 0
