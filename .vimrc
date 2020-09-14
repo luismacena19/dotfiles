@@ -5,8 +5,8 @@ Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'ycm-core/YouCompleteMe'
 Plug 'Valloric/YouCompleteMe'
 Plug 'vimwiki/vimwiki'
+Plug 'victorze/foo'
 Plug 'haya14busa/incsearch.vim'
-"Plug 'blindFS/vim-taskwarrior'
 Plug 'mateusbraga/vim-spell-pt-br'
 call plug#end()
 
@@ -27,10 +27,12 @@ set display=lastline
 set autoindent
 set smartindent
 "set textwidth=8
+
 "Theming
 "highlight ColorColumn ctermbg=darkgray
-" colorscheme simplicity-darker
-"set background=dark
+colorscheme hyper
+set termguicolors
+syntax enable
 
 "Indentação
 set tabstop=4
@@ -70,8 +72,8 @@ noremap <leader>% :vsplit
 noremap <leader>" :split
 noremap <leader>ev :vsplit ~/.vimrc<cr>
 noremap <leader>sv :source ~/.vimrc<cr>
-nnoremap <F4> :!gcc -o %< % && ./%< 
-nnoremap <F5> :!clean && node % 
+nnoremap <F4> :!clear && gcc -o %< % && ./%< 
+nnoremap <F5> :!clear && node % 
 nnoremap <F6> :!touch 
 nnoremap <leader>h :tabe ~/.vim/help.md
 "Clipboard
