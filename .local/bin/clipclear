@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 clipdel -d ".*" && mkdir ~/.cache/clipmenu.6.nullroot_ && notify-send "Clipboard limpo!"
 
