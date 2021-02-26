@@ -39,12 +39,23 @@ old_time=$now
 
 print_volume() {
 	volume="$(amixer get Master | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
-    onoff="$(amixer get Master | tail -n1 |grep off)"
-	if [[ "$volume" -gt 2 && -n "$onoff" ]];
+    onoffvolume="$(amixer get Master | tail -n1 |grep off)"
+	if [[ "$volume" -gt 2 && -n "$onoffvolume" ]];
 	then
 		echo -e "Mute"
 	else
         echo -e "${volume}"
+	fi
+}
+
+print_mic() {
+	mic="$(amixer get Capture | tail -n1 | sed -r 's/.*\[(.*)%\].*/\1/')"
+    onoffmic="$(amixer get Capture | tail -n1 |grep off)"
+	if [[ "$mic" -gt 2 && -n "$onoffmic" ]];
+	then
+		echo -e "Mute"
+	else
+        echo -e "${mic}"
 	fi
 }
 
@@ -85,7 +96,7 @@ case "$dayOfMonth" in
     postfix="th"
     ;;
 esac
-echo $(date +"%H:%M %B,%d$postfix %Y")
+echo $(date +"%H:%M %b,%d$postfix %Y")
 #Credits to https://stackoverflow.com/users/1638350/atevm
 # Who comment on https://stackoverflow.com/questions/40607925/date-format-in-bash-cases
 }
@@ -99,21 +110,21 @@ print_caps(){
 #	echo -e "$memfree"
 #}
 #
-#print_bat(){
-#	hash acpi || return 0
-#	onl="$(grep "on-line" <(acpi -V))"
-#	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT1/capacity)"
-#	if test -z "$onl"
-#	then
-#		# suspend when we close the lid
-#		#systemctl --user stop inhibit-lid-sleep-on-battery.service
-#		echo -e "${charge}"
-#	else
-#		# On mains! no need to suspend
-#		#systemctl --user start inhibit-lid-sleep-on-battery.service
-#		echo -e "${charge}"
-#	fi
-#}
+print_bat(){
+	hash acpi || return 0
+	onl="$(grep "on-line" <(acpi -V))"
+	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT0/capacity)"
+	if test -z "$onl"
+	then
+		# suspend when we close the lid
+		#systemctl --user stop inhibit-lid-sleep-on-battery.service
+		echo -e "${charge}"
+	else
+		# On mains! no need to suspend
+		#systemctl --user start inhibit-lid-sleep-on-battery.service
+		echo -e "${charge}"
+	fi
+}
 
 while true
 do
@@ -126,7 +137,7 @@ do
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
 
-	xsetroot -name "caps:$(print_caps) vol:$(print_volume) $(print_date) rx $vel_recv tx $vel_trans"
+	xsetroot -name "$(print_caps) mic:$(print_mic) vol:$(print_volume) $(print_date) bat:$(print_bat) rx $vel_recv tx $vel_trans"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
