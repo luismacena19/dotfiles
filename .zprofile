@@ -5,7 +5,7 @@
 PATH="$PATH:$HOME/bin:$HOME/.local/bin"
 export PATH
 export CM_DIR=~/.cache
-setxkbmap -model abnt2 -layout br -variant abnt2
+setxkbmap -model thinkpad60 -layout br
 _src_etc_profile()
 {
     #  Make /etc/profile happier, and have possible ~/.zshenv options like

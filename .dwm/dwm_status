@@ -59,26 +59,26 @@ print_mic() {
 	fi
 }
 
-print_wifi() {
-	ip=$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')
+# print_wifi() {
+# 	ip=$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')
+# 
+# 	if=wlp3s0
+# 		while IFS=$': \t' read -r label value
+# 			do
+# 				case $label in SSID) SSID=$value
+# 				;;
+# 				signal) SIGNAL=$value
+# 				;;
+# 			esac
+# 		done < <(iw "$if" link)
+# 
+# 	echo -e "wifi:$SSID $ip"
+# }
 
-	if=wlp1s0
-		while IFS=$': \t' read -r label value
-			do
-				case $label in SSID) SSID=$value
-				;;
-				signal) SIGNAL=$value
-				;;
-			esac
-		done < <(iw "$if" link)
-
-	echo -e "wifi:$SSID $ip"
-}
-
-print_temp(){
-	test -f /sys/class/thermal/thermal_zone0/temp || return 0
-	echo $(head -c 2 /sys/class/thermal/thermal_zone0/temp)C
-}
+# print_temp(){
+# 	test -f /sys/class/thermal/thermal_zone0/temp || return 0
+# 	echo $(head -c 2 /sys/class/thermal/thermal_zone0/temp)C
+# }
 print_date(){
 dayOfMonth=$(date +%d)
 # Choose postfix
@@ -118,11 +118,11 @@ print_bat(){
 	then
 		# suspend when we close the lid
 		#systemctl --user stop inhibit-lid-sleep-on-battery.service
-		echo -e "${charge}"
+		echo -e "${charge}↓"
 	else
 		# On mains! no need to suspend
 		#systemctl --user start inhibit-lid-sleep-on-battery.service
-		echo -e "${charge}"
+		echo -e "${charge}↑"
 	fi
 }
 
@@ -137,7 +137,7 @@ do
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
 
-	xsetroot -name "$(print_caps) mic:$(print_mic) vol:$(print_volume) $(print_date) bat:$(print_bat) rx $vel_recv tx $vel_trans"
+	xsetroot -name "$(print_caps) mic:$(print_mic) vol:$(print_volume) $(print_date) bat:$(print_bat) $vel_recv↓↑$vel_trans"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
