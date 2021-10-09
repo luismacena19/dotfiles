@@ -1,0 +1,18 @@
+#!/bin/bash
+
+profile="$(\
+	cat <<- EOF | dmenu -l 10 -fn "Terminus:size=14" -nb "#010203"
+	Firefox personal
+	Chrome personal
+EOF
+)"
+
+case "$profile" in
+
+  	"Firefox personal")
+  	firefox -P luis "$@"
+  	;;
+  	"Chrome personal")
+  	google-chrome-stable --profile-directory=Default "$@"
+  	;;
+esac

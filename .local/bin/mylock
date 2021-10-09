@@ -1,4 +1,6 @@
 #!/bin/bash
-escrotum /tmp/screenshot.png
+rm /tmp/screenshot.png 2> /dev/null
+scrot /tmp/screenshot.png
 convert /tmp/screenshot.png -blur 0x7 /tmp/screenshotblur.png
 i3lock -i /tmp/screenshotblur.png
+rm /tmp/screenshotblur.png

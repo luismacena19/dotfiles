@@ -1,4 +1,4 @@
-!#/bin/sh
+#!/bin/sh
 
 ## Makes a nice fade in efect on my wallpaper on the start
 ## To make the images use this command to select the image and place in the right folder 
