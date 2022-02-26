@@ -59,56 +59,71 @@ print_mic() {
 	fi
 }
 
-# print_wifi() {
-# 	ip=$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')
-# 
-# 	if=wlp3s0
-# 		while IFS=$': \t' read -r label value
-# 			do
-# 				case $label in SSID) SSID=$value
-# 				;;
-# 				signal) SIGNAL=$value
-# 				;;
-# 			esac
-# 		done < <(iw "$if" link)
-# 
-# 	echo -e "wifi:$SSID $ip"
-# }
+print_wifi() {
+  IP=$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')
+  
+  if [[ $IP != '' ]]; then
+    SSID=$(iwgetid -r)
+    if [[ $SSID != '' ]]; then
+      echo -e "WiFi"
+      else
+    echo -e "Cable"
+    fi
+  else 
+    echo -e "Disconected"
+  fi
+}
 
 # print_temp(){
 # 	test -f /sys/class/thermal/thermal_zone0/temp || return 0
 # 	echo $(head -c 2 /sys/class/thermal/thermal_zone0/temp)C
 # }
 print_date(){
-dayOfMonth=$(date +%d)
-# Choose postfix
-case "$dayOfMonth" in
-    1)
-    postfix="st"
-    ;;
-    2)
-    postfix="nd"
-    ;;
-    3)
-    postfix="rd"
-    ;;
-    *)
-    postfix="th"
-    ;;
-esac
-echo $(date +"%H:%M %b,%d$postfix %Y")
+#dayOfMonth=$(date +%d)
+## Choose postfix
+#case "$dayOfMonth" in
+#    1)
+#    postfix="st"
+#    ;;
+#    2)
+#    postfix="nd"
+#    ;;
+#    3)
+#    postfix="rd"
+#    ;;
+#    *)
+#    postfix="th"
+#    ;;
+#esac
+#echo $(date +"%H:%M %b,%d$postfix %Y")
+echo $(date +"%Hh%M|%d/%m/%y")
+
 #Credits to https://stackoverflow.com/users/1638350/atevm
 # Who comment on https://stackoverflow.com/questions/40607925/date-format-in-bash-cases
 }
 
 print_caps(){
-  echo "Caps:"$(xset q | grep Caps | awk '{ print $4 }') "Num:"$(xset q | grep Num | awk '{ print $8 }')
+  if [[ $(xset q | grep Caps | awk '{ print $4 }') = "on" ]];
+  then
+  echo -e "[C]" 
+  else 
+  echo -e "[]"
+  fi
 }
 
-#print_mem(){
-#	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
-#	echo -e "$memfree"
-#}
+print_num(){
+  if [[ $(xset q | grep Num | awk '{ print $8 }') = "on" ]];
+  then
+  echo -e "[1]" 
+  else 
+  echo -e "[]"
+  fi
+}
+
+print_mem(){
+	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
+	echo -e "$memfree"
+}
 #
 print_bat(){
 	hash acpi || return 0
@@ -137,7 +152,7 @@ do
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
 
-	xsetroot -name "$(print_caps) mic:$(print_mic) vol:$(print_volume) $(print_date) bat:$(print_bat) $vel_recv↓↑$vel_trans"
+	xsetroot -name "$(print_caps)$(print_num) $(print_mem) vol:$(print_volume) mic:$(print_mic) bat:$(print_bat) $vel_recv↓$(print_wifi)↑$vel_trans $(print_date)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes

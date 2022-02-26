@@ -1,8 +1,10 @@
 ./dwm_status &
 nm-applet &
 blueman-applet & 
-setxkbmap -model abnt2 -layout br -variant abnt2
-picom &
+#setxkbmap -model abnt2 -layout br -variant abnt2
+setxkbmap -model thinkpad60 -layout br
+#picom &
+xcompmgr -c -C -t-5 -l-5 -r4.2 -o.55 &
 clipmenud &
 redshift-gtk &
 dunst &
