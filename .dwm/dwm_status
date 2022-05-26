@@ -96,27 +96,39 @@ print_date(){
 #    ;;
 #esac
 #echo $(date +"%H:%M %b,%d$postfix %Y")
-echo $(date +"%Hh%M|%d/%m/%y")
+#echo $(date +"%Hh%M|%d/%m/%y")
+echo $(date +"%d-%m %Hh%M")
 
 #Credits to https://stackoverflow.com/users/1638350/atevm
 # Who comment on https://stackoverflow.com/questions/40607925/date-format-in-bash-cases
+}
+print_weather(){
+	echo -e $(cat /home/nullroot_/.local/share/weather.txt)
+}
+print_coffee(){
+  if [[ $(xset q | grep "DPMS is " | awk '{ print $3 }') = "Disabled" ]];
+  then
+  echo -e "☕" 
+  else 
+  echo -e ""
+  fi
 }
 
 print_caps(){
   if [[ $(xset q | grep Caps | awk '{ print $4 }') = "on" ]];
   then
-  echo -e "[C]" 
+  echo -e "C " 
   else 
-  echo -e "[]"
+  echo -e ""
   fi
 }
 
 print_num(){
   if [[ $(xset q | grep Num | awk '{ print $8 }') = "on" ]];
   then
-  echo -e "[1]" 
+  echo -e "1 " 
   else 
-  echo -e "[]"
+  echo -e ""
   fi
 }
 
@@ -152,7 +164,7 @@ do
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
 
-	xsetroot -name "$(print_caps)$(print_num) $(print_mem) vol:$(print_volume) mic:$(print_mic) bat:$(print_bat) $vel_recv↓$(print_wifi)↑$vel_trans $(print_date)"
+	xsetroot -name "$(print_caps)$(print_num)$(print_mem)mb v:$(print_volume) m:$(print_mic) b:$(print_bat) $vel_recv↓$(print_wifi)↑$vel_trans $(print_weather) $(print_date)$(print_coffee)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes

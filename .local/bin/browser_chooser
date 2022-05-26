@@ -2,17 +2,25 @@
 
 profile="$(\
 	cat <<- EOF | dmenu -l 10 -fn "Terminus:size=14" -nb "#010203"
-	Firefox personal
-	Chrome personal
+	Firefox luismacena96
+	Chrome luismacena96
+	Chrome datitn
+	Chrome Study
 EOF
 )"
 
 case "$profile" in
 
-  	"Firefox personal")
+  	"Firefox luismacena96")
   	firefox -P luis "$@"
   	;;
-  	"Chrome personal")
+  	"Chrome luismacena96")
   	google-chrome-stable --profile-directory=Default "$@"
   	;;
+	"Chrome datitn")
+  	google-chrome-stable --profile-directory=Profile\ 1 "$@"
+  	;;
+  	"Chrome Study")
+  	google-chrome-stable --profile-directory=System "$@"
+  	;; 
 esac

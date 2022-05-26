@@ -2,14 +2,14 @@
 
 ## Makes a nice fade in efect on my wallpaper on the start
 ## To make the images use this command to select the image and place in the right folder 
-## convert path/to/the/wanted/image.jpg -blur 0x2 path/to/the/wanted/folde/blur2.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x3 path/to/the/wanted/folde/blur3.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x4 path/to/the/wanted/folde/blur4.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x1 path/to/the/wanted/folde/blur1.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x5 path/to/the/wanted/folde/blur5.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x6 path/to/the/wanted/folde/blur6.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x7 path/to/the/wanted/folde/blur7.jpg && /
-## convert path/to/the/wanted/image.jpg -blur 0x8 path/to/the/wanted/folde/blur8.jpg  
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x1 $HOME/.dwm/wallpaper/blur/blur1.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x2 $HOME/.dwm/wallpaper/blur/blur2.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x3 $HOME/.dwm/wallpaper/blur/blur3.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x4 $HOME/.dwm/wallpaper/blur/blur4.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x5 $HOME/.dwm/wallpaper/blur/blur5.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x6 $HOME/.dwm/wallpaper/blur/blur6.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x7 $HOME/.dwm/wallpaper/blur/blur7.jpg && /
+## convert $HOME/.dwm/wallpaper/475243.jpg -blur 0x8 $HOME/.dwm/wallpaper/blur/blur8.jpg  
 
-sleep 2 && feh --bg-scale path/to/the/wanted/folde/blur8.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur7.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur6.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur5.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur4.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur3.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur2.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/folde/blur1.jpg && sleep 0.2 && feh --bg-scale path/to/the/wanted/image.jpg
+sleep 2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur8.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur7.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur6.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur5.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur4.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur3.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur2.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/blur/blur1.jpg && sleep 0.2 && feh --bg-fill $HOME/.dwm/wallpaper/475243.jpg
 

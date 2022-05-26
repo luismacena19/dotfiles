@@ -33,8 +33,8 @@
 *.color7:       #edf1ff
 *.color15:      #edf1ff
 
-xterm*faceName: Code New Roman Nerd Font
-xterm*faceSize: 14
+xterm*faceName: TerminessTTF Nerd Font
+xterm*faceSize: 12
 xterm*VT100.Translations: #override \
                  Shift <Key>Insert:    insert-selection(SELECT) \n\
                  Ctrl Shift <Key>V:    insert-selection(SELECT) \n\
