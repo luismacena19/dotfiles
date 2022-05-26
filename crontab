@@ -1,0 +1,4 @@
+# Update weather info
+*/30 * * * * $HOME/.local/bin/weather.py
+# Start backup on fridays
+30 18 * * 5 $HOME/.local/bin/backup.sh
