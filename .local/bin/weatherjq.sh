@@ -1,0 +1,2 @@
+#!/usr/bin/env sh
+curl --silent https://api.openweathermap.org/data/2.5/weather\?lat\=-23.5475\&lon\=-46.6361\&units\=metric\&appid\=ae282a855340382ad9d60ad69e252478 | jq -j '.weather[].description, ":",(.main.temp | tostring)[:2],"c°"' > $HOME/.local/share/weather.txt
