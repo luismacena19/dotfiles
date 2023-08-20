@@ -1,6 +1,4 @@
 {
-  //"coc.preferences.formatOnSaveFiletypes": ["py", "yaml", "json"],
-  // pyright config
   "pyright.enable": true,
   "python.linting.flake8Enabled": false,
   "python.formatting.provider": "black",
@@ -8,4 +6,16 @@
   "pyright.inlayHints.functionReturnTypes" : false,
   "pyright.inlayHints.variableTypes": false,
   "pyright.disableCompletion":false,
+  "languageserver": {
+  "ccls": {
+    "command": "ccls",
+    "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+    "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+    "initializationOptions": {
+        "cache": {
+          "directory": "/tmp/ccls"
+        }
+      }
+    }
+  }
 }

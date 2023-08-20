@@ -1,6 +1,8 @@
 set nocompatible
 
 call plug#begin()
+" Tokyonight theme
+Plug 'ghifarit53/tokyonight-vim'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -35,8 +37,28 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Comment/Uncomment tool
 Plug 'scrooloose/nerdcommenter'
 
-" Initialize plugin system
+" CSS Color
+Plug 'ap/vim-css-color'
+" Tmux and nvim integration
+Plug'christoomey/vim-tmux-navigator'
+
+"Initialize plugin system
 call plug#end()
+
+set termguicolors
+
+let g:tokyonight_style = 'night' " available: night, storm
+let g:tokyonight_enable_italic = 0
+
+colorscheme tokyonight
+
+" tmux navigator stuff
+let g:tmux_navigator_no_mappings = 1
+nnoremap <silent> <c-w>h :TmuxNavigateLeft<cr>
+nnoremap <silent> <c-w>j :TmuxNavigateDown<cr>
+nnoremap <silent> <c-w>k :TmuxNavigateUp<cr>
+nnoremap <silent> <c-w>l :TmuxNavigateRight<cr>
+nnoremap <silent> <c-w>; :TmuxNavigatePrevious<cr>
 
 " Necessary for CSV and so on
 filetype plugin on

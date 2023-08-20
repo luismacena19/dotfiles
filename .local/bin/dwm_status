@@ -42,7 +42,7 @@ print_volume() {
     onoffvolume="$(amixer get Master | tail -n1 |grep off)"
 	if [[ "$volume" -gt 2 && -n "$onoffvolume" ]];
 	then
-		echo -e "🛇"
+		echo -e "Mute"
 	else
         echo -e "${volume}"
 	fi
@@ -53,7 +53,7 @@ print_mic() {
     onoffmic="$(amixer get Capture | tail -n1 |grep off)"
 	if [[ "$mic" -gt 2 && -n "$onoffmic" ]];
 	then
-		echo -e "🛇"
+		echo -e "Mute"
 	else
         echo -e "${mic}"
 	fi
@@ -71,38 +71,38 @@ print_wifi() {
     echo -e "Disconected"
   fi
 }
-print_bt() {
-	#ON=$(bluetoothctl show | grep Powered: | awk '{print $2}')
-	#if [[ $ON != 'yes' ]]; then
 
-		bluetoothctl devices | cut -f2 -d' '|
-    while read -r uuid
-    do
-      info=`bluetoothctl info $uuid`
-      if echo "$info" | grep -q "Connected: yes"; then
-        var=$(echo -e "$info" | grep "Name" | cut -d ':' -f 2)
-        echo -e "ᛒ:$var"
-      fi
-    done
-
-}
-echo_vpn(){
-  if [[ $(nmcli | grep VPN) ]]; then
-    echo -e "VPN"
-  fi
-}
-print_temp(){
-	test -f /sys/class/thermal/thermal_zone0/temp || return 0
-	echo $(head -c 2 /sys/class/thermal/thermal_zone4/temp)C
-}
+# print_temp(){
+# 	test -f /sys/class/thermal/thermal_zone0/temp || return 0
+# 	echo $(head -c 2 /sys/class/thermal/thermal_zone0/temp)C
+# }
 print_date(){
-echo $(date +"%H:%M %d/%m/%Y")
-}
+#dayOfMonth=$(date +%d)
+## Choose postfix
+#case "$dayOfMonth" in
+#    1)
+#    postfix="st"
+#    ;;
+#    2)
+#    postfix="nd"
+#    ;;
+#    3)
+#    postfix="rd"
+#    ;;
+#    *)
+#    postfix="th"
+#    ;;
+#esac
+#echo $(date +"%H:%M %b,%d$postfix %Y")
+#echo $(date +"%Hh%M|%d/%m/%y")
+echo $(date +"%d-%m %Hh%M")
 
+#Credits to https://stackoverflow.com/users/1638350/atevm
+# Who comment on https://stackoverflow.com/questions/40607925/date-format-in-bash-cases
+}
 print_weather(){
 	echo -e $(cat $HOME/.local/share/weather.txt)
 }
-
 print_coffee(){
   if [[ $(xset q | grep "DPMS is " | awk '{ print $3 }') = "Disabled" ]];
   then
@@ -115,7 +115,7 @@ print_coffee(){
 print_caps(){
   if [[ $(xset q | grep Caps | awk '{ print $4 }') = "on" ]];
   then
-  echo -e "|C|" 
+  echo -e "C " 
   else 
   echo -e ""
   fi
@@ -124,7 +124,7 @@ print_caps(){
 print_num(){
   if [[ $(xset q | grep Num | awk '{ print $8 }') = "on" ]];
   then
-  echo -e "|1|" 
+  echo -e "1 " 
   else 
   echo -e ""
   fi
@@ -136,21 +136,20 @@ print_mem(){
 }
 #
 print_bat(){
-	hash acpi || return 0
 	onl=$(cat /sys/class/power_supply/BAT0/status)
 	#Charging
   #Discharging
 
 	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT0/capacity)"
-	if [[ $onl = "Discharging" ]]
+	if [ $onl = "Discharging" ]
 	then
 		# suspend when we close the lid
 		#systemctl --user stop inhibit-lid-sleep-on-battery.service
-		echo -e "${charge}"
+		echo -e "${charge}↓"
 	else
 		# On mains! no need to suspend
 		#systemctl --user start inhibit-lid-sleep-on-battery.service
-		echo -e "⚡ ${charge}"
+		echo -e "${charge}↑"
 	fi
 }
 
@@ -165,7 +164,7 @@ do
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
 
-  xsetroot -name "$(print_temp) $(print_caps)$(print_num) $(print_mem)mb |vol:$(print_volume) mic:$(print_mic)| $vel_recv↓↑$vel_trans | $(print_weather) | $(print_date) |$(print_bat)% $(print_coffee)"
+	xsetroot -name "$(print_caps)$(print_num)$(print_mem)mb v:$(print_volume) m:$(print_mic) $vel_recv↓$(print_wifi)↑$vel_trans $(print_weather) $(print_date) bat:$(print_bat) $(print_coffee)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
@@ -174,3 +173,5 @@ do
 	sleep 1; 
 
 done
+
+

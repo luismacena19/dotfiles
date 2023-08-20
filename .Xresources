@@ -1,41 +1,53 @@
-! BladeRunner theme by wulf 
-! Oct 31, 2017 	
-! Copy on http://dotshare.it/dots/1555/
-! Sep 14, 2020
-
-!! *.color15: nord6
-*.foreground:   #845a5e
-*.background:   #24191a
-*.cursorColor:  #8b80cf
-
-! black original
-*.color0:       #010101
-*.color8:       #010101
-! red
-*.color1:       #f05d4e
-*.color9:       #f09f8d
-! green
-*.color2:       #a26e4d
-*.color10:      #a2968f
-! yellow
-*.color3:       #e58d3c
-*.color11:      #e5b78d
-! blue
-*.color4:       #e96332
-*.color12:      #e99b7e
-! magenta
-*.color5:       #815a18
-*.color13:      #816e4d
-! cyan
-*.color6:       #eab429
-*.color14:      #eacd81
-! white original 
-*.color7:       #edf1ff
-*.color15:      #edf1ff
-
-xterm*faceName: TerminessTTF Nerd Font
-xterm*faceSize: 12
+xterm*selectToClipboard: true
+xterm*faceName: Terminess Nerd Font
+xterm*faceSize: 15
 xterm*VT100.Translations: #override \
                  Shift <Key>Insert:    insert-selection(SELECT) \n\
                  Ctrl Shift <Key>V:    insert-selection(SELECT) \n\
                  Ctrl Shift <Key>C:    copy-selection(SELECT)
+*.foreground:    #A9B1D6
+*.background:    #16161e
+*.cursorColor:   #A9B1D6
+*.highlightColor:#3A3F4B
+
+!*fading:                  40
+!*fadeColor:               S_base03
+!*pointerColorBackground:  S_base01
+!*pointerColorForeground:  S_base1
+
+! Normal      Bright
+! --------    -------
+! 0 Black      8 Black
+! 1 Red        9 Red
+! 2 Yellow    10 Yellow
+! 3 Green     11 Green
+! 4 Blue      12 Blue
+! 5 Magenta   13 Magenta
+! 6 Cyan      14 Cyan
+! 7 White     15 White
+
+! Black colours
+*.color0:        #1A1B26
+*.color8:        #4E5173
+! Red colours
+*.color1:        #E06C75
+*.color9:        #db4b4b
+! Yellow colours
+*.color2:        #e0af68
+*.color10:       #ff9e64
+! Green colours
+*.color3:        #9ECE6A
+*.color11:       #98C379
+! Blue colours
+*.color4:        #7AA2F7
+*.color12:       #61AFEF
+! Magenta (pink, !green) colours
+*.color5:        #ff007c
+*.color13:       #bb9af7
+! Cyan (blue + green)
+*.color6:        #4ABAAF
+*.color14:       #56B6C2
+! White colours
+*.color7:        #ACB0D0
+*.color15:       #ABB2BF
+
