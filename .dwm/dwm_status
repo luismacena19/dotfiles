@@ -42,9 +42,9 @@ print_volume() {
     onoffvolume="$(amixer get Master | tail -n1 |grep off)"
 	if [[ "$volume" -gt 2 && -n "$onoffvolume" ]];
 	then
-		echo -e "🛇"
+		echo -e " 󰖁 "
 	else
-        echo -e "${volume}"
+        echo -e "󰕾 ${volume}"
 	fi
 }
 
@@ -53,9 +53,9 @@ print_mic() {
     onoffmic="$(amixer get Capture | tail -n1 |grep off)"
 	if [[ "$mic" -gt 2 && -n "$onoffmic" ]];
 	then
-		echo -e "🛇"
+		echo -e "  "
 	else
-        echo -e "${mic}"
+        echo -e " ${mic}"
 	fi
 }
 
@@ -63,46 +63,49 @@ print_wifi() {
   IP=$(ip route get 8.8.8.8 2>/dev/null|grep -Eo 'src [0-9.]+'|grep -Eo '[0-9.]+')
   
   if [[ $IP != '' ]]; then
-    SSID=$(nmcli connection show --active | grep wifi | awk '{print $1}')
+    SSID=$(iwgetid -r)
     if [[ $SSID != '' ]]; then
-      echo -e "WiFi"
+      echo -e "   "
+      else
+    echo -e " 󰌗  "
+    #echo -e " 󰈁 "
     fi
   else 
-    echo -e "Disconected"
+    echo -e " 󰌙  "
   fi
 }
-print_bt() {
-	#ON=$(bluetoothctl show | grep Powered: | awk '{print $2}')
-	#if [[ $ON != 'yes' ]]; then
 
-		bluetoothctl devices | cut -f2 -d' '|
-    while read -r uuid
-    do
-      info=`bluetoothctl info $uuid`
-      if echo "$info" | grep -q "Connected: yes"; then
-        var=$(echo -e "$info" | grep "Name" | cut -d ':' -f 2)
-        echo -e "ᛒ:$var"
-      fi
-    done
-
-}
-echo_vpn(){
-  if [[ $(nmcli | grep VPN) ]]; then
-    echo -e "VPN"
-  fi
-}
-print_temp(){
-	test -f /sys/class/thermal/thermal_zone0/temp || return 0
-	echo $(head -c 2 /sys/class/thermal/thermal_zone4/temp)C
-}
+# print_temp(){
+# 	test -f /sys/class/thermal/thermal_zone0/temp || return 0
+# 	echo $(head -c 2 /sys/class/thermal/thermal_zone0/temp)C
+# }
 print_date(){
-echo $(date +"%H:%M %d/%m/%Y")
-}
+#dayOfMonth=$(date +%d)
+## Choose postfix
+#case "$dayOfMonth" in
+#    1)
+#    postfix="st"
+#    ;;
+#    2)
+#    postfix="nd"
+#    ;;
+#    3)
+#    postfix="rd"
+#    ;;
+#    *)
+#    postfix="th"
+#    ;;
+#esac
+#echo $(date +"%H:%M %b,%d$postfix %Y")
+#echo $(date +"%Hh%M|%d/%m/%y")
+echo $(date +"󰃭 %d-%m  %Hh%M")
 
+#Credits to https://stackoverflow.com/users/1638350/atevm
+# Who comment on https://stackoverflow.com/questions/40607925/date-format-in-bash-cases
+}
 print_weather(){
 	echo -e $(cat $HOME/.local/share/weather.txt)
 }
-
 print_coffee(){
   if [[ $(xset q | grep "DPMS is " | awk '{ print $3 }') = "Disabled" ]];
   then
@@ -115,42 +118,56 @@ print_coffee(){
 print_caps(){
   if [[ $(xset q | grep Caps | awk '{ print $4 }') = "on" ]];
   then
-  echo -e "|C|" 
+  echo -e " 󰬈 " 
   else 
-  echo -e ""
+  echo -e " 󰯫 "
   fi
 }
 
 print_num(){
   if [[ $(xset q | grep Num | awk '{ print $8 }') = "on" ]];
   then
-  echo -e "|1|" 
+  echo -e "󰎤 " 
   else 
-  echo -e ""
+  echo -e "󰎦 "
   fi
 }
 
 print_mem(){
 	memfree=$(($(grep -m1 'MemAvailable:' /proc/meminfo | awk '{print $2}') / 1024))
-	echo -e "$memfree"
+	echo -e "󰍛 $memfree"
 }
 #
 print_bat(){
 	hash acpi || return 0
-	onl=$(cat /sys/class/power_supply/BAT0/status)
-	#Charging
-  #Discharging
-
+	onl="$(grep "on-line" <(acpi -V))"
 	charge="$(awk '{ sum += $1 } END { print sum }' /sys/class/power_supply/BAT0/capacity)"
-	if [[ $onl = "Discharging" ]]
+	if test -z "$onl"
 	then
 		# suspend when we close the lid
 		#systemctl --user stop inhibit-lid-sleep-on-battery.service
-		echo -e "${charge}"
+    if [[ ${charge} -lt 50  ]];
+    then
+      echo -e "󰁾 ${charge}%"
+
+    elif  [[ ${charge} -lt 20  ]];
+    then
+      echo -e "󰁻 ${charge}%"
+    else
+		echo -e "󰁹 ${charge}%"
+    fi
 	else
 		# On mains! no need to suspend
 		#systemctl --user start inhibit-lid-sleep-on-battery.service
-		echo -e "⚡ ${charge}"
+    if [[ ${charge} -lt 50 ]];
+    then
+      echo -e "󰢝  ${charge}%"
+    elif [[ ${charge} -lt 20 ]];
+    then
+      echo -e "󰂆  ${charge}%"
+    else
+      echo -e "󰂄 ${charge}"
+    fi
 	fi
 }
 
@@ -165,7 +182,7 @@ do
 	vel_trans=$(get_velocity $transmitted_bytes $old_transmitted_bytes $now)
 
 
-  xsetroot -name "$(print_temp) $(print_caps)$(print_num) $(print_mem)mb |vol:$(print_volume) mic:$(print_mic)| $vel_recv↓↑$vel_trans | $(print_weather) | $(print_date) |$(print_bat)% $(print_coffee)"
+	xsetroot -name "$(print_caps)$(print_num) $(print_mem)mb $(print_volume) $(print_mic) $(print_bat) $vel_recv↓$(print_wifi)↑$vel_trans $(print_weather) $(print_date) $(print_coffee)"
 
 	# Update old values to perform new calculations
 	old_received_bytes=$received_bytes
@@ -174,3 +191,4 @@ do
 	sleep 1; 
 
 done
+
