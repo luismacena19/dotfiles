@@ -1,21 +1,26 @@
 {
   "pyright.enable": true,
-  "python.linting.flake8Enabled": false,
+  "python.linting.flake8Enabled": true,
+  "python.linting.banditEnabled": true,
   "python.formatting.provider": "black",
   "pyright.disableDocumentation": true,
   "pyright.inlayHints.functionReturnTypes" : false,
   "pyright.inlayHints.variableTypes": false,
   "pyright.disableCompletion":false,
+  "python.analysis.typeCheckingMode": "off",
+  "pyright.inlayHints.functionReturnTypes": false,
+  "pyright.inlayHints.variableTypes": false,
+  "pyright.inlayHints.parameterTypes": false,
   "languageserver": {
-  "ccls": {
-    "command": "ccls",
-    "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
-    "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
-    "initializationOptions": {
-        "cache": {
-          "directory": "/tmp/ccls"
+      "ccls": {
+        "command": "ccls",
+        "filetypes": ["c", "cc", "cpp", "c++", "objc", "objcpp"],
+        "rootPatterns": [".ccls", "compile_commands.json", ".git/", ".hg/"],
+        "initializationOptions": {
+          "cache": {
+            "directory": "/tmp/ccls"
+          }
         }
       }
     }
-  }
 }

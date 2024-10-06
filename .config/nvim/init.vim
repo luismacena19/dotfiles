@@ -1,8 +1,9 @@
 set nocompatible
 
 call plug#begin()
-" Tokyonight theme
-Plug 'ghifarit53/tokyonight-vim'
+
+" New theme
+Plug 'miikanissi/modus-themes.nvim'
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
@@ -39,18 +40,18 @@ Plug 'scrooloose/nerdcommenter'
 
 " CSS Color
 Plug 'ap/vim-css-color'
+
 " Tmux and nvim integration
 Plug'christoomey/vim-tmux-navigator'
 
 "Initialize plugin system
 call plug#end()
 
+" Theme
 set termguicolors
-
-let g:tokyonight_style = 'night' " available: night, storm
-let g:tokyonight_enable_italic = 0
-
-colorscheme tokyonight
+set background=dark
+highlight Normal ctermbg=black guibg=black
+colorscheme modus
 
 " tmux navigator stuff
 let g:tmux_navigator_no_mappings = 1
@@ -67,6 +68,9 @@ syntax enable
 
 " Leader set to ,
 let mapleader = ","
+
+" Mapeia <leader>pd insert breakpoint to debug python files
+nnoremap <leader>pd oimport pdb; pdb.set_trace()<Esc>
 
 " Source init.vim
 noremap <leader>sv :source ~/.config/nvim/init.vim<cr>
@@ -100,6 +104,7 @@ nmap <leader>a <Plug>(coc-codeaction-selected)<CR>
 " Format action on <leader>f
 vmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
+
 " Goto definition
 nmap <silent> gd <Plug>(coc-definition)
 " Open definition in a split window

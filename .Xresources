@@ -6,7 +6,7 @@ xterm*VT100.Translations: #override \
                  Ctrl Shift <Key>V:    insert-selection(SELECT) \n\
                  Ctrl Shift <Key>C:    copy-selection(SELECT)
 *.foreground:    #A9B1D6
-*.background:    #16161e
+*.background:    #060600
 *.cursorColor:   #A9B1D6
 *.highlightColor:#3A3F4B
 
